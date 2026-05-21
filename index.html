@@ -3,114 +3,147 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Zicheng Zhou | Resume</title>
-  <meta name="description" content="Resume, selected work, and contact information for Zicheng Zhou.">
+  <title>Zicheng Zhou</title>
+  <meta name="description" content="Personal homepage of Zicheng Zhou, including short bio, selected work, writing, and contact information.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Cormorant+Garamond:wght@600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Instrument+Sans:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="./assets/styles.css">
 </head>
 <body>
   <div class="page-shell">
-    <header class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow">Resume</p>
-        <h1>Zicheng Zhou</h1>
-        <p class="lede">
-          Building thoughtful digital products with a taste for sharp writing,
-          quiet systems, and clear interfaces.
-        </p>
-        <div class="hero-actions">
-          <a class="button primary" href="mailto:zhouzicheng66@163.com">Email Me</a>
-          <a class="button" href="https://github.com/zicheng1119" target="_blank" rel="noreferrer">GitHub</a>
-          <a class="button" href="https://zicheng1119.github.io/freeandeasy/">Visit Blog</a>
+    <aside class="profile-column">
+      <div class="profile-sticky">
+        <div class="portrait-card" aria-hidden="true">
+          <div class="portrait-mark">ZZ</div>
         </div>
+
+        <div class="profile-copy">
+          <h1>Zicheng Zhou</h1>
+          <p class="profile-role">Builder, writer, and frontend-focused product maker</p>
+          <p class="profile-affiliation">Shanghai / Remote</p>
+        </div>
+
+        <div class="profile-links">
+          <a href="mailto:zhouzicheng66@163.com">zhouzicheng66@163.com</a>
+          <a href="https://github.com/zicheng1119" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://zicheng1119.github.io/freeandeasy/">Blog</a>
+        </div>
+
+        <nav class="profile-nav" aria-label="Page sections">
+          <a href="#bio">Short Bio</a>
+          <a href="#updates">Updates</a>
+          <a href="#work">Selected Work</a>
+          <a href="#writing">Writing</a>
+          <a href="#contact">Contact</a>
+        </nav>
       </div>
+    </aside>
 
-      <aside class="hero-card">
-        <div class="hero-card-row">
-          <span class="label">Location</span>
-          <span class="value">Shanghai / Remote</span>
-        </div>
-        <div class="hero-card-row">
-          <span class="label">Focus</span>
-          <span class="value">Frontend, product sites, content systems</span>
-        </div>
-        <div class="hero-card-row">
-          <span class="label">Now</span>
-          <span class="value">Turning personal notes into public projects</span>
-        </div>
-      </aside>
-    </header>
-
-    <main class="main-grid">
-      <section class="panel statement">
-        <p class="section-kicker">Profile</p>
-        <h2>About</h2>
-        <p>
-          This page is the concise version: who I am, what I work on, and how to reach me.
-          The longer thinking lives on the blog. The goal is simple: keep the homepage crisp,
-          and let the writing breathe elsewhere.
+    <main class="content-column">
+      <section class="intro-block">
+        <p class="intro-kicker">Personal Homepage</p>
+        <p class="intro-text">
+          This page is the concise version of who I am and what I am building.
+          Longer notes, experiments, and drafts live on my blog.
         </p>
       </section>
 
-      <section class="panel timeline">
-        <p class="section-kicker">Experience</p>
+      <section id="bio" class="content-section">
+        <h2>Short Bio</h2>
+        <p>
+          I am interested in building thoughtful digital experiences with a focus on
+          frontend systems, publishing workflows, and clear information design. My work
+          usually sits between writing, product shaping, and implementation: turning rough
+          ideas into sites, tools, and public-facing artifacts that feel calm, readable,
+          and durable.
+        </p>
+        <p>
+          At the moment, I am using this site as the stable front door for my resume and
+          portfolio, while keeping my blog at
+          <a href="https://zicheng1119.github.io/freeandeasy/">/freeandeasy/</a>
+          as the place for longer notes and ongoing work.
+        </p>
+      </section>
+
+      <section id="updates" class="content-section">
+        <h2>Updates</h2>
+        <ul class="news-list">
+          <li><span class="news-date">2026-05</span><span class="news-text">Launched this two-part personal site structure: root domain for resume, subpath for blog.</span></li>
+          <li><span class="news-date">2026-05</span><span class="news-text">Built an independent Hugo blog workflow with GitHub Pages deployment.</span></li>
+          <li><span class="news-date">Next</span><span class="news-text">Replace placeholders on this page with your real education, experience, and projects.</span></li>
+        </ul>
+      </section>
+
+      <section id="work" class="content-section">
         <h2>Selected Work</h2>
 
-        <article class="timeline-item">
-          <div class="timeline-meta">2026 - Present</div>
-          <div class="timeline-body">
-            <h3>Independent Builder</h3>
-            <p>Designing and shipping personal web projects, content systems, and public-facing writing.</p>
+        <article class="entry">
+          <div class="entry-meta">Web / Systems</div>
+          <div class="entry-body">
+            <h3>Free & Easy</h3>
+            <p>
+              A Hugo-based personal blog deployed to GitHub Pages as a project site, with
+              custom search, independent theming, and a maintenance-friendly repository structure.
+            </p>
+            <div class="entry-links">
+              <a href="https://zicheng1119.github.io/freeandeasy/">Visit Site</a>
+              <a href="https://github.com/zicheng1119/freeandeasy" target="_blank" rel="noreferrer">Source</a>
+            </div>
           </div>
         </article>
 
-        <article class="timeline-item">
-          <div class="timeline-meta">Add Yours</div>
-          <div class="timeline-body">
-            <h3>Your Role Here</h3>
-            <p>Replace this with a real company, lab, school, or project experience.</p>
+        <article class="entry">
+          <div class="entry-meta">Resume / Design</div>
+          <div class="entry-body">
+            <h3>Personal Homepage</h3>
+            <p>
+              A restrained academic-style homepage for identity, links, selected work, and contact.
+              This page is intentionally compact and stable, serving as the canonical profile surface.
+            </p>
           </div>
         </article>
 
-        <article class="timeline-item">
-          <div class="timeline-meta">Add Yours</div>
-          <div class="timeline-body">
-            <h3>Another Highlight</h3>
-            <p>Use this area for internships, collaborations, or notable self-directed work.</p>
+        <article class="entry">
+          <div class="entry-meta">Placeholder</div>
+          <div class="entry-body">
+            <h3>Your Next Project</h3>
+            <p>
+              Replace this entry with a real project, internship, lab, paper, startup, or product case.
+              The layout is designed so you can keep adding sections like this without changing structure.
+            </p>
           </div>
         </article>
       </section>
 
-      <section class="panel">
-        <p class="section-kicker">Capabilities</p>
-        <h2>What I Like Building</h2>
-        <ul class="pill-list">
-          <li>Static websites</li>
-          <li>Hugo workflows</li>
-          <li>Frontend systems</li>
-          <li>Landing pages</li>
-          <li>Personal publishing</li>
-          <li>Documentation UX</li>
-        </ul>
+      <section id="writing" class="content-section">
+        <h2>Writing</h2>
+        <p>
+          My longer-form notes and working thoughts are collected on the blog. It is where
+          experiments, technical notes, and project reflections continue evolving.
+        </p>
+        <p>
+          <a href="https://zicheng1119.github.io/freeandeasy/">Go to the blog</a>
+        </p>
       </section>
 
-      <section class="panel">
-        <p class="section-kicker">Links</p>
-        <h2>Find Me</h2>
-        <ul class="link-list">
-          <li><a href="mailto:zhouzicheng66@163.com">zhouzicheng66@163.com</a></li>
-          <li><a href="https://github.com/zicheng1119" target="_blank" rel="noreferrer">github.com/zicheng1119</a></li>
-          <li><a href="https://zicheng1119.github.io/freeandeasy/">zicheng1119.github.io/freeandeasy</a></li>
-        </ul>
+      <section id="contact" class="content-section">
+        <h2>Contact</h2>
+        <p>
+          The easiest way to reach me is by email:
+          <a href="mailto:zhouzicheng66@163.com">zhouzicheng66@163.com</a>.
+        </p>
+        <p>
+          You can also find my code and public projects on
+          <a href="https://github.com/zicheng1119" target="_blank" rel="noreferrer">GitHub</a>.
+        </p>
       </section>
+
+      <footer class="site-footer">
+        <p>Last updated for the current two-site setup.</p>
+        <p><a href="https://zicheng1119.github.io/freeandeasy/">Blog</a> / <a href="https://github.com/zicheng1119" target="_blank" rel="noreferrer">GitHub</a></p>
+      </footer>
     </main>
-
-    <footer class="footer">
-      <p>Root site for resume and portfolio.</p>
-      <p>Blog lives at <a href="https://zicheng1119.github.io/freeandeasy/">/freeandeasy/</a>.</p>
-    </footer>
   </div>
 </body>
 </html>
