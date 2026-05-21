@@ -2,6 +2,10 @@
 
 Root GitHub Pages site for the resume homepage.
 
+Editing guide:
+
+- [docs/EDITING.md](./docs/EDITING.md)
+
 ## Role split
 
 - `https://zicheng1119.github.io/`
