@@ -6,11 +6,14 @@ This document explains how to maintain and customize the root site at:
 
 This repo is intentionally simple. The whole site is made of only a few parts:
 
-- `index.html`: page structure and all text content
-- `assets/styles.css`: colors, layout, typography, spacing, and responsive behavior
+- `editable/site-data.js`: the main content source you should edit first
+- `editable/overrides.css`: your personal CSS override file
+- `index.html`: page structure and render shell
+- `assets/styles.css`: base colors, layout, typography, spacing, and responsive behavior
+- `assets/render.js`: turns `editable/site-data.js` into the visible page
 - `.github/workflows/pages.yaml`: automatic deployment to GitHub Pages
 
-If you want to change the resume page, most of the time you only need `index.html` and `assets/styles.css`.
+If you want to change the resume page, most of the time you only need files inside `editable/`.
 
 ## 1. Repo structure
 
@@ -18,12 +21,30 @@ If you want to change the resume page, most of the time you only need `index.htm
 zicheng1119.github.io/
 ├── .github/workflows/pages.yaml
 ├── assets/
+│   ├── render.js
 │   └── styles.css
 ├── docs/
 │   └── EDITING.md
+├── editable/
+│   ├── images/
+│   │   └── README.md
+│   ├── overrides.css
+│   ├── README.md
+│   └── site-data.js
 ├── index.html
 └── README.md
 ```
+
+## 1.1 Where you should edit now
+
+Use this order:
+
+1. `editable/site-data.js`
+2. `editable/overrides.css`
+3. `assets/styles.css`
+4. `index.html`
+
+In normal use, you should rarely need step 3 or step 4.
 
 ## 2. Daily workflow
 
@@ -58,24 +79,24 @@ GitHub Actions will deploy automatically to:
 
 ### Change your name
 
-Edit these places in `index.html`:
+Edit these places in `editable/site-data.js`:
 
-- `<title>...</title>`
-- `<h1>...</h1>`
-- the text inside the portrait block if you want the initials to change
+- `meta.title`
+- `profile.name`
+- `profile.initials`
 
 Current examples:
 
-- `<title>Zicheng Zhou</title>`
-- `<h1>Zicheng Zhou</h1>`
-- `<div class="portrait-mark">ZZ</div>`
+- `title: "Zicheng Zhou"`
+- `name: "Zicheng Zhou"`
+- `initials: "ZZ"`
 
 ### Change the one-line identity
 
 Edit:
 
-- `<p class="profile-role">...</p>`
-- `<p class="profile-affiliation">...</p>`
+- `profile.role`
+- `profile.affiliation`
 
 Use these for things like:
 
@@ -87,7 +108,7 @@ Use these for things like:
 
 Edit the links inside:
 
-- `<div class="profile-links">...</div>`
+- `links: []`
 
 Typical items:
 
@@ -100,32 +121,36 @@ Typical items:
 
 Example:
 
-```html
-<div class="profile-links">
-  <a href="mailto:your@email.com">your@email.com</a>
-  <a href="https://github.com/your-id" target="_blank" rel="noreferrer">GitHub</a>
-  <a href="https://your-blog.example.com/">Blog</a>
-</div>
+```js
+links: [
+  { label: "your@email.com", href: "mailto:your@email.com", external: false },
+  { label: "GitHub", href: "https://github.com/your-id", external: true },
+  { label: "Blog", href: "https://your-blog.example.com/", external: false }
+]
 ```
 
 ### Change the section list on the left
 
-Edit the anchor links inside:
+Edit the section list inside:
 
-- `<nav class="profile-nav" aria-label="Page sections">...</nav>`
+- `nav: []`
 
 Each link should match a section `id` on the right side.
 
 Example:
 
-```html
-<a href="#bio">Short Bio</a>
+```js
+nav: [
+  { id: "bio", label: "Short Bio" }
+]
 ```
 
-must match:
+must match a section in:
 
-```html
-<section id="bio" class="content-section">
+```js
+sections: [
+  { type: "bio", id: "bio", title: "Short Bio", paragraphs: [...] }
+]
 ```
 
 If they do not match, the left-side navigation will not scroll to the right section.
@@ -146,7 +171,7 @@ Main wrapper:
 </div>
 ```
 
-If you want to add new content, you will almost always add it inside `<main class="content-column">`.
+If you want to add new content, you will almost always add it inside `editable/site-data.js`.
 
 ## 5. How to edit each section
 
@@ -154,13 +179,11 @@ If you want to add new content, you will almost always add it inside `<main clas
 
 File:
 
-- `index.html`
+- `editable/site-data.js`
 
 Block:
 
-```html
-<section class="intro-block">...</section>
-```
+- `intro`
 
 Use this for:
 
@@ -172,9 +195,7 @@ Use this for:
 
 Block:
 
-```html
-<section id="bio" class="content-section">...</section>
-```
+- `sections` item with `type: "bio"`
 
 Use this for:
 
@@ -193,13 +214,7 @@ Recommended style:
 
 Block:
 
-```html
-<section id="updates" class="content-section">
-  <ul class="news-list">
-    <li>...</li>
-  </ul>
-</section>
-```
+- `sections` item with `type: "updates"`
 
 Each item has two pieces:
 
@@ -208,11 +223,10 @@ Each item has two pieces:
 
 Example:
 
-```html
-<li>
-  <span class="news-date">2026-05</span>
-  <span class="news-text">Started a new project on ...</span>
-</li>
+```js
+items: [
+  { date: "2026-05", text: "Started a new project on ..." }
+]
 ```
 
 Good uses:
@@ -228,26 +242,22 @@ Good uses:
 
 Block:
 
-```html
-<section id="work" class="content-section">...</section>
-```
+- `sections` item with `type: "work"`
 
-Each project uses one `.entry`.
+Each project uses one `items` entry.
 
 Structure:
 
-```html
-<article class="entry">
-  <div class="entry-meta">Category</div>
-  <div class="entry-body">
-    <h3>Project name</h3>
-    <p>Project description</p>
-    <div class="entry-links">
-      <a href="...">Visit</a>
-      <a href="...">Source</a>
-    </div>
-  </div>
-</article>
+```js
+{
+  meta: "Category",
+  title: "Project name",
+  description: "Project description",
+  links: [
+    { label: "Visit", href: "https://example.com", external: true },
+    { label: "Source", href: "https://github.com/example", external: true }
+  ]
+}
 ```
 
 What to put here:
@@ -269,9 +279,7 @@ Best practice:
 
 Block:
 
-```html
-<section id="writing" class="content-section">...</section>
-```
+- `sections` item with `type: "text"` and `id: "writing"`
 
 This is usually a bridge to your blog. You can:
 
@@ -283,9 +291,7 @@ This is usually a bridge to your blog. You can:
 
 Block:
 
-```html
-<section id="contact" class="content-section">...</section>
-```
+- `sections` item with `type: "text"` and `id: "contact"`
 
 Good options:
 
@@ -303,33 +309,35 @@ If you want to add a new section like `Experience`, `Publications`, or `Teaching
 
 ### Step 1: add a nav item on the left
 
-Inside `.profile-nav`:
+Inside `nav`:
 
-```html
-<a href="#experience">Experience</a>
+```js
+{ id: "experience", label: "Experience" }
 ```
 
 ### Step 2: add a matching section on the right
 
-Inside `.content-column`:
+Inside `sections`:
 
-```html
-<section id="experience" class="content-section">
-  <h2>Experience</h2>
-  <p>Put your content here.</p>
-</section>
+```js
+{
+  type: "text",
+  id: "experience",
+  title: "Experience",
+  paragraphs: ["Put your content here."]
+}
 ```
 
 That is enough for the new section to work.
 
 ## 7. Replace the initials block with a real photo
 
-Right now the top visual is:
+Right now the top visual is controlled by:
 
-```html
-<div class="portrait-card" aria-hidden="true">
-  <div class="portrait-mark">ZZ</div>
-</div>
+```js
+profile: {
+  initials: "ZZ"
+}
 ```
 
 If you want a real profile image:
@@ -338,36 +346,26 @@ If you want a real profile image:
 
 Put the file in:
 
-- `assets/portrait.jpg`
+- `editable/images/portrait.jpg`
 
 or:
 
-- `assets/portrait.png`
+- `editable/images/portrait.png`
 
-### Step 2: replace the block in `index.html`
+### Step 2: uncomment the `photo` block in `editable/site-data.js`
 
 Use:
 
-```html
-<div class="portrait-card">
-  <img class="portrait-image" src="./assets/portrait.jpg" alt="Portrait of Your Name">
-</div>
-```
-
-### Step 3: add image styles in `assets/styles.css`
-
-Add:
-
-```css
-.portrait-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+```js
+photo: {
+  src: "./editable/images/portrait.jpg",
+  alt: "Portrait of Your Name"
 }
 ```
 
-If you want the image to show more face and less crop, adjust `object-fit` or add `object-position`.
+### Step 3: preview and adjust if needed
+
+If you want the image to show more face and less crop, adjust `.portrait-image` in `assets/styles.css` or add an override in `editable/overrides.css`.
 
 ## 8. Change colors
 
@@ -580,10 +578,10 @@ You can also make the whole page Chinese by rewriting the section labels and par
 
 ## 16. SEO and browser metadata
 
-Important metadata at the top of `index.html`:
+Important metadata now mainly lives in `editable/site-data.js`:
 
-- `<title>...</title>`
-- `<meta name="description" content="...">`
+- `meta.title`
+- `meta.description`
 
 Update them whenever you change your identity or page focus.
 
@@ -657,17 +655,18 @@ for external links.
 
 If you want to change content only:
 
-- edit `index.html`
+- edit `editable/site-data.js`
 
 If you want to change appearance only:
 
-- edit `assets/styles.css`
+- edit `editable/overrides.css`
+- or edit `assets/styles.css` for base styles
 
 If you want to change both:
 
-1. update `index.html`
+1. update `editable/site-data.js`
 2. preview locally
-3. adjust `assets/styles.css`
+3. adjust `editable/overrides.css`
 4. preview again
 5. commit and push
 
@@ -686,10 +685,10 @@ Before pushing, quickly check:
 
 If you only want to turn the current page into a real version as fast as possible, edit these five areas first:
 
-1. `profile-copy`
-2. `profile-links`
-3. `#bio`
-4. `#updates`
-5. `#work`
+1. `profile`
+2. `links`
+3. `sections[0]` for bio
+4. `sections[1]` for updates
+5. `sections[2]` for work
 
 That alone will turn the current skeleton into a real homepage.

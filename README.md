@@ -5,6 +5,7 @@ Root GitHub Pages site for the resume homepage.
 Editing guide:
 
 - [docs/EDITING.md](./docs/EDITING.md)
+- Main editable folder: [editable/](./editable/)
 
 ## Role split
 
