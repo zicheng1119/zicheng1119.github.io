@@ -1,28 +1,28 @@
-# Editable Folder
+# 可编辑目录
 
-This folder is the main place you should edit for the resume site.
+此目录是简历站点的主要编辑区域。
 
-## Files
+## 文件说明
 
 - `site-data.js`
-  - Main content source for the page
-  - Edit your name, intro, links, sections, work, updates, and footer here
+  - 页面的主要内容源
+  - 在此编辑你的姓名、简介、链接、章节、作品、动态和页脚
 - `overrides.css`
-  - Optional personal CSS overrides
-  - Use this if you want to tweak colors, spacing, or component styles without touching the base stylesheet
+  - 可选的个人 CSS 覆盖文件
+  - 如果你想调整颜色、间距或组件样式而不修改基础样式表，使用此文件
 - `images/`
-  - Put your portrait or other personal images here
+  - 将你的头像或其他个人图片放在此处
 
-## Recommended workflow
+## 推荐工作流
 
-1. Edit `site-data.js`
-2. Preview locally
-3. If needed, add small visual fixes in `overrides.css`
-4. Commit and push
+1. 编辑 `site-data.js`
+2. 本地预览
+3. 如果需要，在 `overrides.css` 中添加小的视觉修正
+4. 提交并推送
 
-## When you still need to touch other files
+## 何时需要编辑其他文件
 
 - `index.html`
-  - Only if you want to change the page skeleton
+  - 仅当你想更改页面骨架时
 - `assets/styles.css`
-  - Only if you want to change the shared base design system
+  - 仅当你想更改共享的基础设计系统时

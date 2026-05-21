@@ -1,7 +1,7 @@
-Put personal images here, for example:
+将个人图片放在此处，例如：
 
 - `portrait.jpg`
 - `portrait.png`
 - `cover.jpg`
 
-If you want to use a portrait on the homepage, uncomment and edit the `photo` field in `editable/site-data.js`.
+如果想在主页上使用头像，请取消 `editable/site-data.js` 中 `photo` 字段的注释并编辑。
