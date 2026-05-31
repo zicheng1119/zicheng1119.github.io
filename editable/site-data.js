@@ -36,7 +36,8 @@ window.resumeSiteData = {
   links: [
     { label: { zh: "邮箱", en: "Email" }, href: "mailto:zhouzicheng66@163.com", external: true },
     { label: "GitHub", href: "https://github.com/zicheng1119", external: true },
-    { label: { zh: "博客", en: "Blog" }, href: "https://zicheng1119.github.io/freeandeasy/", external: false }
+    { label: { zh: "博客", en: "Blog" }, href: "/freeandeasy/", external: false },
+    { label: { zh: "笔记", en: "Notes" }, href: "/notes/", external: false }
   ],
 
   nav: [
