@@ -486,6 +486,21 @@ width: 38px;
   transform: translateX(-50%) translateY(0);
 }
 
+/* ── print ───────────────────────────────────────────────────── */
+@media print {
+  .topbar,
+  .to-top,
+  .toast {
+    display: none;
+  }
+
+  html,
+  body {
+    background: #fff;
+    color: #000;
+  }
+}
+
 /* ── reduced motion ──────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   html {
