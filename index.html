@@ -12,6 +12,11 @@
   <link rel="stylesheet" href="./editable/overrides.css">
 </head>
 <body>
+  <div class="topbar">
+    <button class="icon-btn" id="lang-toggle" type="button">EN</button>
+    <button class="icon-btn" id="theme-toggle" type="button" aria-label="toggle theme">◐</button>
+  </div>
+
   <div class="page-shell">
     <aside class="profile-column">
       <div class="profile-sticky">
@@ -47,6 +52,9 @@
       </footer>
     </main>
   </div>
+
+  <button class="to-top" id="to-top" type="button" aria-label="back to top">↑</button>
+  <div class="toast" id="toast" role="status"></div>
 
   <script src="./editable/site-data.js"></script>
   <script src="./assets/render.js"></script>

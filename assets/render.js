@@ -2,13 +2,23 @@
   var data = window.resumeSiteData;
 
   if (!data) {
-    return;
+ return;
+  }
+
+  var currentLang = localStorage.getItem("lang") ||
+    (data.meta && data.meta.lang && data.meta.lang.indexOf("zh") === 0 ? "zh" : "en");
+
+  function pick(field) {
+    if (field && typeof field === "object" && !Array.isArray(field)) {
+      return field[currentLang] || field.en || field.zh || "";
+    }
+    return field;
   }
 
   function createLink(link, className) {
     var anchor = document.createElement("a");
     anchor.href = link.href;
-    anchor.textContent = link.label;
+    anchor.textContent = pick(link.label);
 
     if (link.external) {
       anchor.target = "_blank";
@@ -24,8 +34,8 @@
 
   function appendParagraphs(parent, paragraphs) {
     (paragraphs || []).forEach(function (text) {
-      var paragraph = document.createElement("p");
-      paragraph.textContent = text;
+ var paragraph = document.createElement("p");
+      paragraph.textContent = pick(text);
       parent.appendChild(paragraph);
     });
   }
@@ -35,19 +45,17 @@
       return;
     }
 
-    if (meta.lang) {
-      document.documentElement.lang = meta.lang;
-    }
+    document.documentElement.lang = currentLang === "zh" ? "zh-CN" : "en";
 
     if (meta.title) {
-      document.title = meta.title;
+      document.title = pick(meta.title);
     }
 
     if (meta.description) {
-      var descriptionTag = document.querySelector('meta[name="description"]');
+  var descriptionTag = document.querySelector('meta[name="description"]');
 
       if (descriptionTag) {
-        descriptionTag.setAttribute("content", meta.description);
+        descriptionTag.setAttribute("content", pick(meta.description));
       }
     }
   }
@@ -58,33 +66,33 @@
     }
 
     var portraitCard = document.getElementById("portrait-card");
-    var mark = document.getElementById("portrait-mark");
-    var name = document.getElementById("profile-name");
+  var mark = document.getElementById("portrait-mark");
+ var name = document.getElementById("profile-name");
     var role = document.getElementById("profile-role");
-    var affiliation = document.getElementById("profile-affiliation");
+  var affiliation = document.getElementById("profile-affiliation");
 
     if (profile.photo && profile.photo.src) {
       portraitCard.innerHTML = "";
 
       var image = document.createElement("img");
-      image.className = "portrait-image";
+ image.className = "portrait-image";
       image.src = profile.photo.src;
-      image.alt = profile.photo.alt || ("Portrait of " + (profile.name || "site owner"));
+      image.alt = pick(profile.photo.alt) || ("Portrait of " + (pick(profile.name) || "site owner"));
       portraitCard.appendChild(image);
     } else if (profile.initials) {
       mark.textContent = profile.initials;
     }
 
     if (profile.name) {
-      name.textContent = profile.name;
+   name.textContent = pick(profile.name);
     }
 
     if (profile.role) {
-      role.textContent = profile.role;
+      role.textContent = pick(profile.role);
     }
 
     if (profile.affiliation) {
-      affiliation.textContent = profile.affiliation;
+   affiliation.textContent = pick(profile.affiliation);
     }
   }
 
@@ -93,24 +101,24 @@
     linksRoot.innerHTML = "";
 
     (links || []).forEach(function (link) {
-      linksRoot.appendChild(createLink(link));
+ linksRoot.appendChild(createLink(link));
     });
   }
 
   function renderNav(nav) {
-    var navRoot = document.getElementById("profile-nav");
+  var navRoot = document.getElementById("profile-nav");
     navRoot.innerHTML = "";
 
-    (nav || []).forEach(function (item) {
-      var link = document.createElement("a");
+ (nav || []).forEach(function (item) {
+    var link = document.createElement("a");
       link.href = "#" + item.id;
-      link.textContent = item.label;
+      link.textContent = pick(item.label);
       navRoot.appendChild(link);
     });
   }
 
   function renderIntro(intro) {
-    if (!intro) {
+ if (!intro) {
       return;
     }
 
@@ -118,11 +126,11 @@
     var text = document.getElementById("intro-text");
 
     if (intro.kicker) {
-      kicker.textContent = intro.kicker;
-    }
+   kicker.textContent = pick(intro.kicker);
+  }
 
     if (intro.text) {
-      text.textContent = intro.text;
+      text.textContent = pick(intro.text);
     }
   }
 
@@ -131,8 +139,8 @@
     wrapper.id = section.id;
     wrapper.className = "content-section";
 
-    var title = document.createElement("h2");
-    title.textContent = section.title;
+ var title = document.createElement("h2");
+    title.textContent = pick(section.title);
     wrapper.appendChild(title);
 
     appendParagraphs(wrapper, section.paragraphs);
@@ -145,7 +153,7 @@
     wrapper.className = "content-section";
 
     var title = document.createElement("h2");
-    title.textContent = section.title;
+    title.textContent = pick(section.title);
     wrapper.appendChild(title);
 
     var list = document.createElement("ul");
@@ -157,9 +165,9 @@
       var text = document.createElement("span");
 
       date.className = "news-date";
-      date.textContent = item.date;
-      text.className = "news-text";
-      text.textContent = item.text;
+      date.textContent = pick(item.date);
+   text.className = "news-text";
+    text.textContent = pick(item.text);
 
       li.appendChild(date);
       li.appendChild(text);
@@ -176,29 +184,29 @@
     wrapper.className = "content-section";
 
     var title = document.createElement("h2");
-    title.textContent = section.title;
+    title.textContent = pick(section.title);
     wrapper.appendChild(title);
 
     (section.items || []).forEach(function (item) {
       var article = document.createElement("article");
-      article.className = "entry";
+   article.className = "entry";
 
-      var meta = document.createElement("div");
+  var meta = document.createElement("div");
       meta.className = "entry-meta";
-      meta.textContent = item.meta;
+      meta.textContent = pick(item.meta);
 
       var body = document.createElement("div");
       body.className = "entry-body";
 
       var heading = document.createElement("h3");
-      heading.textContent = item.title;
+      heading.textContent = pick(item.title);
       body.appendChild(heading);
 
       appendParagraphs(body, [item.description]);
 
-      if (item.links && item.links.length > 0) {
-        var links = document.createElement("div");
-        links.className = "entry-links";
+ if (item.links && item.links.length > 0) {
+     var links = document.createElement("div");
+  links.className = "entry-links";
 
         item.links.forEach(function (link) {
           links.appendChild(createLink(link));
@@ -207,8 +215,8 @@
         body.appendChild(links);
       }
 
-      article.appendChild(meta);
-      article.appendChild(body);
+  article.appendChild(meta);
+  article.appendChild(body);
       wrapper.appendChild(article);
     });
 
@@ -221,17 +229,17 @@
     wrapper.className = "content-section";
 
     var title = document.createElement("h2");
-    title.textContent = section.title;
+    title.textContent = pick(section.title);
     wrapper.appendChild(title);
 
     appendParagraphs(wrapper, section.paragraphs);
 
-    if (section.links && section.links.length > 0) {
+ if (section.links && section.links.length > 0) {
       var links = document.createElement("p");
 
       section.links.forEach(function (link, index) {
         if (index > 0) {
-          links.appendChild(document.createTextNode(" / "));
+  links.appendChild(document.createTextNode(" / "));
         }
 
         links.appendChild(createLink(link));
@@ -250,33 +258,33 @@
     (sections || []).forEach(function (section) {
       if (section.type === "bio") {
         renderBio(section, root);
-        return;
+ return;
       }
 
-      if (section.type === "updates") {
+   if (section.type === "updates") {
         renderUpdates(section, root);
-        return;
+return;
       }
 
       if (section.type === "work") {
-        renderWork(section, root);
-        return;
+     renderWork(section, root);
+      return;
       }
 
       renderRichTextSection(section, root);
-    });
+});
   }
 
   function renderFooter(footer) {
     if (!footer) {
-      return;
+    return;
     }
 
-    var copy = document.getElementById("footer-copy");
+var copy = document.getElementById("footer-copy");
     var linksRoot = document.getElementById("footer-links");
 
     if (footer.copy) {
-      copy.textContent = footer.copy;
+      copy.textContent = pick(footer.copy);
     }
 
     linksRoot.innerHTML = "";
@@ -286,15 +294,132 @@
         linksRoot.appendChild(document.createTextNode(" / "));
       }
 
-      linksRoot.appendChild(createLink(link));
+ linksRoot.appendChild(createLink(link));
     });
   }
 
-  renderMeta(data.meta);
-  renderProfile(data.profile);
-  renderLinks(data.links);
-  renderNav(data.nav);
-  renderIntro(data.intro);
-  renderSections(data.sections);
-  renderFooter(data.footer);
+  function toast(msg) {
+    var t = document.getElementById("toast");
+    if (!t) {
+      return;
+    }
+    t.textContent = msg;
+    t.classList.add("show");
+    setTimeout(function () {
+      t.classList.remove("show");
+    }, 1600);
+  }
+
+  function initTheme() {
+    var saved = localStorage.getItem("theme");
+    var dark = saved ? saved === "dark"
+      : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+
+    var btn = document.getElementById("theme-toggle");
+    if (!btn) {
+      return;
+    }
+    btn.addEventListener("click", function () {
+ var now = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", now);
+      localStorage.setItem("theme", now);
+    });
+  }
+
+  function initLang() {
+    var btn = document.getElementById("lang-toggle");
+    if (!btn) {
+    return;
+    }
+ btn.textContent = currentLang === "zh" ? "EN" : "中";
+    btn.addEventListener("click", function () {
+    currentLang = currentLang === "zh" ? "en" : "zh";
+      localStorage.setItem("lang", currentLang);
+  btn.textContent = currentLang === "zh" ? "EN" : "中";
+      renderAll();
+    });
+  }
+
+  function initScrollSpy() {
+    var navLinks = {};
+    document.querySelectorAll("#profile-nav a").forEach(function (a) {
+      navLinks[a.getAttribute("href").slice(1)] = a;
+    });
+
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+    Object.keys(navLinks).forEach(function (id) {
+            navLinks[id].classList.remove("active");
+          });
+          if (navLinks[e.target.id]) {
+          navLinks[e.target.id].classList.add("active");
+          }
+      }
+      });
+  }, { rootMargin: "-40% 0px -55% 0px" });
+
+    document.querySelectorAll(".content-section").forEach(function (s) {
+      obs.observe(s);
+    });
+  }
+
+  function initCopyEmail() {
+    document.querySelectorAll('a[href^="mailto:"]').forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+  var email = a.getAttribute("href").replace("mailto:", "");
+        navigator.clipboard.writeText(email).then(function () {
+       toast(currentLang === "zh" ? "邮箱已复制" : "Email copied");
+  });
+  });
+    });
+  }
+
+  function initToTop() {
+    var btn = document.getElementById("to-top");
+    if (!btn) {
+  return;
+    }
+    window.addEventListener("scroll", function () {
+      btn.classList.toggle("show", window.scrollY > 400);
+    });
+    btn.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
+  function initReveal() {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+      e.target.classList.add("in");
+        }
+  });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll(".content-section").forEach(function (s) {
+    s.classList.add("reveal");
+      obs.observe(s);
+    });
+  }
+
+  function renderAll() {
+    renderMeta(data.meta);
+    renderProfile(data.profile);
+    renderLinks(data.links);
+    renderNav(data.nav);
+    renderIntro(data.intro);
+    renderSections(data.sections);
+    renderFooter(data.footer);
+    initScrollSpy();
+ initCopyEmail();
+    initReveal();
+  }
+
+  renderAll();
+  initTheme();
+  initLang();
+  initToTop();
 })();
