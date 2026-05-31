@@ -368,11 +368,16 @@ var copy = document.getElementById("footer-copy");
   function initCopyEmail() {
     document.querySelectorAll('a[href^="mailto:"]').forEach(function (a) {
       a.addEventListener("click", function (e) {
+        if (!navigator.clipboard || !navigator.clipboard.writeText) {
+ return;
+        }
         e.preventDefault();
   var email = a.getAttribute("href").replace("mailto:", "");
         navigator.clipboard.writeText(email).then(function () {
        toast(currentLang === "zh" ? "邮箱已复制" : "Email copied");
-  });
+        }).catch(function () {
+          window.location.href = a.getAttribute("href");
+        });
   });
     });
   }

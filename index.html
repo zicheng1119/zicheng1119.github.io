@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Zicheng Zhou</title>
   <meta name="description" content="Personal homepage of Zicheng Zhou, including short bio, selected work, writing, and contact information.">
+  <script>
+    (function () {
+      var saved = localStorage.getItem("theme");
+      var dark = saved ? saved === "dark"
+        : window.matchMedia("(prefers-color-scheme: dark)").matches;
+  document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=Instrument+Sans:wght@400;500;600;700&display=swap">
@@ -13,7 +21,7 @@
 </head>
 <body>
   <div class="topbar">
-    <button class="icon-btn" id="lang-toggle" type="button">EN</button>
+    <button class="icon-btn" id="lang-toggle" type="button" aria-label="切换语言 / switch language">EN</button>
     <button class="icon-btn" id="theme-toggle" type="button" aria-label="toggle theme">◐</button>
   </div>
 
@@ -26,8 +34,8 @@
 
         <div class="profile-copy">
           <h1 id="profile-name">Zicheng Zhou</h1>
-          <p class="profile-role" id="profile-role">Builder, writer, and frontend-focused product maker</p>
-          <p class="profile-affiliation" id="profile-affiliation">Shanghai / Remote</p>
+              <p class="profile-role" id="profile-role">Engineering Student</p>
+  <p class="profile-affiliation" id="profile-affiliation">Hangzhou / Zhejiang University</p>
         </div>
 
         <div class="profile-links" id="profile-links"></div>
@@ -39,8 +47,8 @@
       <section class="intro-block">
         <p class="intro-kicker" id="intro-kicker">Personal Homepage</p>
         <p class="intro-text" id="intro-text">
-          This page is the concise version of who I am and what I am building.
-          Longer notes, experiments, and drafts live on my blog.
+          This page is a stable profile surface for my resume, portfolio, and contact information.
+          It is intentionally concise and focused, while my blog serves as the place for longer notes and ongoing work.
         </p>
       </section>
 
